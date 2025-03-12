@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: crawler-job
+spec:
+  template:
+    spec:
+      securityContext:
+        runAsUser: 269394
+        runAsGroup: 1132
+      containers:
+      - name: crawler
+        image: webrecorder/browsertrix-crawler
+        command: ["crawl"]
+        args: ["--url", "[URL]", "--generateWACZ", "--text", "--collection", "test"]
+        volumeMounts:
+          - name: home
+            mountPath: "/crawls/"
+      restartPolicy: Never
+      volumes:
+      - name: home
+        nfs:
+          server: 128.239.56.166
+          path: /sciclone/home/iahewababarand/repos/data-622-225
+  backoffLimit: 3

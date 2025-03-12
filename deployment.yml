@@ -17,18 +17,18 @@ spec:
           memory: "24Gi"
           cpu: "16"
       volumeMounts:
-      - name: home
-        mountPath: "/app"
+        - name: home
+          mountPath: "/app"
       command: ["/bin/sh", "-c"]
       args:
         - |
-          docker pull webrecorder/browsertrix-crawler
-          docker run -v /app/crawls:/crawls/ -it webrecorder/browsertrix-crawler crawl \
-          --url [URL] --generateWACZ --text --collection test
-      stdin: true
-      tty: true
+          # Running the crawling task directly within this container
+          # Adjust this based on the specific behavior you want for the container
+          webrecorder/browsertrix-crawler crawl --url [URL] --generateWACZ --text --collection test
+      stdin: false
+      tty: false
   volumes:
-  - name: home
-    nfs:
-      server: 128.239.56.166
-      path: /sciclone/home/iahewababarand/repos/data-622-225
+    - name: home
+      nfs:
+        server: 128.239.56.166
+        path: /sciclone/home/iahewababarand/repos/data-622-225
