@@ -2,9 +2,10 @@
 FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
 SHELL ["/bin/bash", "-c"]
 
-# Update the package list and install curl
+# Install Docker client and curl
 RUN apt-get update && apt-get install -y \
     curl \
+    docker.io \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

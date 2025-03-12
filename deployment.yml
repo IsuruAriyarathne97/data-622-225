@@ -3,29 +3,32 @@ kind: Pod
 metadata:
   name: example-container
 spec:
-#  activeDeadlineSeconds: 1800  # Pod terminates after 30 min
   securityContext:
-    runAsUser: 260433 # run id command in terminal to get your UID
+    runAsUser: 269394
+    runAsGroup: 1132
   containers:
     - name: example-container
-      image: ghcr.io/location/your_image_name:tag  # image name
+      image: ghcr.io/isuruariyarathne97/data-622-225:main
       resources:
-        requests: # minimum resources
+        requests:
           memory: "16Gi"
           cpu: "8"
-        limits: # maximum resources
+        limits:
           memory: "24Gi"
           cpu: "16"
       volumeMounts:
       - name: home
         mountPath: "/app"
-      command: ["/bin/sh"]
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          docker pull webrecorder/browsertrix-crawler
+          docker run -v /app/crawls:/crawls/ -it webrecorder/browsertrix-crawler crawl \
+          --url [URL] --generateWACZ --text --collection test
       stdin: true
       tty: true
   volumes:
   - name: home
     nfs:
       server: 128.239.56.166
-      path: /sciclone/home/your_username/repos/your_repo_name
-  imagePullSecrets:
-  - name: ghcr-secret
+      path: /sciclone/home/iahewababarand/repos/data-622-225
